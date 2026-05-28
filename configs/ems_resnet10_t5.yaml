@@ -1,0 +1,28 @@
+# EMS-ResNet10, T=5 — paper Table 5 row 3
+model:
+  num_classes: 80
+  T: 5
+  widths: [64, 128, 256, 512]
+  head_ch: 256
+  num_anchors: 3
+  tau: 0.25
+  v_th: 0.5
+  alpha: 1.0
+
+data:
+  img_size: 640
+  num_workers: 8
+
+train:
+  epochs: 100
+  batch_size: 4           # T=5 doubles activation memory vs T=3
+  accum_steps: 8          # keep effective batch = 32
+  optimizer: SGD
+  lr0: 0.003
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 1
+  cosine: true
+  amp: true
+  save_every: 10
+  eval_every: 5

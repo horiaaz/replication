@@ -1,0 +1,29 @@
+# EMS-ResNet10, T=3 — paper Table 5 row 2
+# Init from the T=1 checkpoint to cut training time (Sec. 5.3).
+model:
+  num_classes: 80
+  T: 3
+  widths: [64, 128, 256, 512]
+  head_ch: 256
+  num_anchors: 3
+  tau: 0.25
+  v_th: 0.5
+  alpha: 1.0
+
+data:
+  img_size: 640
+  num_workers: 8
+
+train:
+  epochs: 100             # fewer epochs because we're fine-tuning
+  batch_size: 8
+  accum_steps: 4
+  optimizer: SGD
+  lr0: 0.003              # lower lr for fine-tune
+  momentum: 0.937
+  weight_decay: 0.0005
+  warmup_epochs: 1
+  cosine: true
+  amp: true
+  save_every: 10
+  eval_every: 5
